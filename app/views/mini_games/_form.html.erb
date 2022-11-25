@@ -1,0 +1,32 @@
+<%= form_with(model: mini_game) do |form| %>
+  <% if mini_game.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(mini_game.errors.count, "error") %> prohibited this mini_game from being saved:</h2>
+
+      <ul>
+        <% mini_game.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :type, style: "display: block" %>
+    <%= form.text_field :type %>
+  </div>
+
+  <div>
+    <%= form.label :payload, style: "display: block" %>
+    <%= form.text_field :payload %>
+  </div>
+
+  <div>
+    <%= form.label :answer, style: "display: block" %>
+    <%= form.text_field :answer %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

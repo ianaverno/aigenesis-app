@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @biome %>
+
+<div>
+  <%= link_to "Edit this biome", edit_biome_path(@biome) %> |
+  <%= link_to "Back to biomes", biomes_path %>
+
+  <%= button_to "Destroy this biome", @biome, method: :delete %>
+</div>

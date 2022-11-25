@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @mini_game %>
+
+<div>
+  <%= link_to "Edit this mini game", edit_mini_game_path(@mini_game) %> |
+  <%= link_to "Back to mini games", mini_games_path %>
+
+  <%= button_to "Destroy this mini game", @mini_game, method: :delete %>
+</div>

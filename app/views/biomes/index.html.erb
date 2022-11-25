@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Biomes</h1>
+
+<div id="biomes">
+  <% @biomes.each do |biome| %>
+    <%= render biome %>
+    <p>
+      <%= link_to "Show this biome", biome %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New biome", new_biome_path %>

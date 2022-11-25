@@ -1,0 +1,28 @@
+<div class="prompt" id="<%= dom_id prompt %>">
+  <p>
+    <strong>id:</strong>
+    <%= prompt.id %>
+  </p>
+
+  <p>
+    <strong>Text:</strong>
+    <%= prompt.text %>
+  </p>
+
+  <p>
+    <%= DalleRequest.find_by(prompt: prompt.text).fetch_url %>
+  </p>
+  
+
+  <p>
+    <strong>Artworks:</strong>
+
+    <div class="artworks">
+      <% prompt.artworks.each do |a| %>
+        <%= image_tag a.url %>
+      <% end %>
+    </div>
+  </p>
+
+
+</div>
