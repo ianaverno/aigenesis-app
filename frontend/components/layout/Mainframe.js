@@ -6,6 +6,8 @@ export default function Mainframe() {
     <div className={styles.container}>
       <div className={styles.screen}>
         <Grid/>
+        
+        <ScenarioRenderer />
       </div>
     </div>
   )
