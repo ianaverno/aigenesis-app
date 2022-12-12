@@ -57,6 +57,7 @@ export default function Grid() {
         <div className={styles.line}></div>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
+        <div className={styles.line}></div>
       </div>
     </div>
   )

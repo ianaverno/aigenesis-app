@@ -1,22 +1,26 @@
-function renderScenario(state) {
-  switch (state.user) {
-    case null:
-      const [dialogue, setDialogue] = useState({});
-      return(
-        <WelcomeDialogue dialogue={state.welcomeDialogue} />
-      )
-  
-    default:
-      break;
-  }
-}
+import { useState } from "react";
+import { useUser } from "../../contexts/UserContext";
+import Logger from "./Logger";
+import DialogWindow from "../scenario-templates/DialogWindow";
 
 export default function ScenarioRenderer() {
-  scenario = renderScenario(initState);
+  const user = useUser();
+
+  function renderScenario(user) {
+    if (user.isLoggedIn) {
+      // not implemented
+    } else {
+      return(
+        <Logger>
+          <DialogWindow dialogId={"welcomeDroid"} />
+        </Logger>
+      );
+    }
+  }
 
   return (
     <div className="ScenarioRenderer">
-      {scenario}
+      {renderScenario(user)}
     </div>
   )
 }

@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  border: 1px solid rgba(239, 239, 239, 0.75);
+  box-shadow: inset 0px 0px 7px #EFEFEF;
+  border-radius: 5px;
+  overflow: hidden; 
+}
+
+.desert {
+  border: 1px solid rgba(255, 249, 128, 0.5);
+  box-shadow: inset 0px 0px 7px #FFF980;
+}

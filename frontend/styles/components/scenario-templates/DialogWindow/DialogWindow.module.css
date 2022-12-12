@@ -1,0 +1,31 @@
+.l_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 100;
+  /* 36rem */
+}
+
+.l_top {
+  /* border: 1px solid red; */
+  flex-grow: 2;
+
+  /* 24rem */
+}
+
+.l_bottom {
+  flex-grow: 1;
+
+  /* 12rem */
+}
+
+.counterpart {
+  padding-top: calc(4rem - 1px);
+  padding-left: calc(4rem - 1px);
+  display: flex;
+  height: 100%;
+  /* border: 1px solid green; */
+}

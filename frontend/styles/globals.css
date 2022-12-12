@@ -1,3 +1,8 @@
+@font-face {
+  font-family: CPMono;
+  src: url("../public/fonts/CPMono.otf") format("opentype");
+}
+
 :root {
   --color-jungle: #33FFCC;
   --color-desert: #FFF980;

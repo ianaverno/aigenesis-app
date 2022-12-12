@@ -1,20 +1,23 @@
-import React, { createContext, Component } from 'react';
+import React, { useContext, createContext } from 'react';
+import initState from '../store/state';
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
-class UserContextProvider extends Component {
-  state = { 
-    isLoggedIn: false,
-    user: {}
-  }
-
-  render() { 
-    return (
-      <UserContext.Provider value={{...this.state}}>
-
-      </UserContext.Provider>
-    );
-  }
+export function useUser() {
+  return useContext(UserContext);
 }
- 
-export default UserContextProvider;
+
+function fetchUser() {
+  return(JSON.parse(initState).user);
+}
+
+export function UserProvider({ children }) {
+  const user = fetchUser();
+  // console.log({user});
+
+  return(
+    <UserContext.Provider value={user}>
+      {children}
+    </UserContext.Provider>
+  )
+};

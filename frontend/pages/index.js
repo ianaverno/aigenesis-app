@@ -1,9 +1,10 @@
 import Head from 'next/head';
-// import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Mainframe from '../components/layout/Mainframe.js';
+import { UserProvider } from '../contexts/UserContext';
+import Mainframe from '../components/layout/Mainframe';
 
-export default function Home() {
+import styles from '../styles/AigenEsis.module.css';
+
+export default function AigenEsis() {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,11 +13,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.screen}>
-        <main className={styles.main}>
+      <main className={styles.main}>
+        <UserProvider>
           <Mainframe />
-        </main>
-      </div>
+        </UserProvider>
+      </main>
     </div>
   )
 }
