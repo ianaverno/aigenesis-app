@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Typewriter from 'typewriter-effect';
 import styles from '../../../styles/components/scenario-templates/DialogWindow/DialogHistoryEntry.module.css';
 
 export default function DialogHistoryEntry(props) {
@@ -7,17 +8,13 @@ export default function DialogHistoryEntry(props) {
   const entryType = props.entry.type;
   const entryClass = styles[entryType];
 
-  const [message, setMessage] = useState(e);
-
-  // useEffect(() => {
-
-  // }, [])
-
-
-
   return (
     <li className={`${styles.wrapper} ${borderClass} ${entryClass}`}>
-      <span dangerouslySetInnerHTML={{__html: message }} />
+      <Typewriter
+        onInit={(typewriter) => {
+          typewriter.typeString(props.entry.html).start();
+        }}
+      />
     </li>
   )
-}
+};

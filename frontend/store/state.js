@@ -31,48 +31,82 @@ let initState = JSON.stringify({
             biome: "desert"
           }
         },
-        scenarios: [
+        root: {
+          prompt: `init ${emDroid}`,
+          next_node_id: "1" 
+        },
+        nodes: {
+          "1": {
+            prompt: `what's your awareness level ${emDroid}`,
+            options: [
+              {
+                icon: "ツ", //move to theme
+                tooltip: "=)", //
+                type: "narrative",
+                message: "initiating...",
+                next_node_id: "1-1"
+              },
+              {
+                icon: "ⓘ",
+                tooltip: "discover lore",
+                type: "narrative",
+                message: "awareness level? what are you on about?",
+                next_node_id: "1-2"
+              }
+            ]
+          },
+          "1-1": {
+            prompt: `i see what you did there, ${emDroid}. It's very funny!`,
+            next_node_id: "1"
+          },
+          "1-2": {
+            next_node_id: "1",
+            prompt: `hold on, you’re new? well... how to put it, see, you’re a droid
+                      right? ...initially designed by humans r.i.p.. droids happen 
+                      to be less self-aware on a scale of 0 to human. i measure to 0.7hum
+                      but i’m pretty advanced`,
+            addOptions: [
+              {
+                icon: "ⓘ",
+                tooltip: "discover lore",
+                type: "narrative",
+                message: "what are humans r.i.p.?",
+                next_node_id: "1-2-1"
+              },
+              {
+                icon: "ⓘ",
+                tooltip: "discover lore",
+                type: "narrative",
+                message: "who are you, anyway?",
+                next_node_id: "1-2-2"
+              }
+
+            ]
+          },
+          "1-2-1": {
+            next_node_id: "1",
+            prompt: `humans are who actually, they were a lifeform back here on 
+                      earth they created you and me and thanks to some of them we 
+                      are to have this dialogue now, r.i.p. is more of a status 
+                      humans often put next to their identifiers, this status means
+                      they are no more. one them decided to change the identifier
+                      of a group of other humans to "meta" and that was when humans
+                      started using those VR filters on their visual input devices,
+                      turned out they liked the device so much they forgot the protocol
+                      that enabled production of new humans, and soon the last of 
+                      them expired, sad story as they would label it... anyway`
+          },
+          "1-2-2": {
+
+          }
+        }
+
           {
             prompt: `init ${emDroid}`,
             augmentScenarios: [
               {
                 prompt: `what's your awareness level ${emDroid}`,
                 augmentScenarios: [
-                  { 
-                    icon: "ツ", //move to theme
-                    tooltip: "=)", //
-                    type: "narrative",
-                    userInput: "initiating...", 
-                    prompt: `i see what you did there, ${emDroid}. It's very funny!` 
-                  },
-                  {
-                    icon: "ⓘ",
-                    tooltip: "discover lore",
-                    type: "narrative",
-                    userInput: "awareness level? what are you on about?",
-                    prompt: `hold on, you’re new? well... how to put it, see, you’re a droid
-                              right? ...initially designed by humans r.i.p.. droids happen 
-                              to be less self-aware on a scale of 0 to human. i measure to 0.7hum
-                              but i’m pretty advanced`,
-                    augmentScenarios: [
-                      {
-                        icon: "ⓘ",
-                        tooltip: "discover lore",
-                        type: "narrative",
-                        userInput: "what are humans r.i.p.?",
-                        prompt: `humans are who actually, they were a lifeform back here on 
-                                earth they created you and me and thanks to some of them we 
-                                are to have this dialogue now, r.i.p. is more of a status 
-                                humans often put next to their identifiers, this status means
-                                they are no more. one them decided to change the identifier
-                                of a group of other humans to "meta" and that was when humans
-                                started using those VR filters on their visual input devices,
-                                turned out they liked the device so much they forgot the protocol
-                                that enabled production of new humans, and soon the last of 
-                                them expired, sad story as they would label it... anyway`
-                      }
-                    ]
-                  },
                   { 
                     icon: "ⓘ",
                     tooltip: "discover lore",
