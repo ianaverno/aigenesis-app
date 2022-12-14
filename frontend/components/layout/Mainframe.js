@@ -5,6 +5,8 @@ import Grid from './Mainframe/Grid.jsx';
 // Mainframe should be refactored to a wrapper component
 // scenario renderer should be passed in as child
 export default function Mainframe() {
+  // console.log("Mainframe");
+
   return (
     <div className={styles.container}>
       <div className={styles.screen}>

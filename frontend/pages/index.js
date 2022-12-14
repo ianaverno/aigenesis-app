@@ -5,19 +5,20 @@ import Mainframe from '../components/layout/Mainframe';
 import styles from '../styles/AigenEsis.module.css';
 
 export default function AigenEsis() {
+  // console.log("index.js");
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Aigen'esis</title>
-        <meta name="description" content="Aigen'esis" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <UserProvider>
+      <div className={styles.container}>
+        <Head>
+          <title>Aigen'esis</title>
+          <meta name="description" content="Aigen'esis" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main className={styles.main}>
-        <UserProvider>
-          <Mainframe />
-        </UserProvider>
-      </main>
-    </div>
+        <main className={styles.main}>
+            <Mainframe />
+        </main>
+      </div>
+    </UserProvider>
   )
 }

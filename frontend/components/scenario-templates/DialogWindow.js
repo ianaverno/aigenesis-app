@@ -4,51 +4,69 @@ import styles from '../../styles/components/scenario-templates/DialogWindow/Dial
 
 import Image from 'next/image';
 import Avatar from '../wrappers/Avatar';
-import DialogHistoryEntry from './DialogWindow/DialogHistoryEntry';
+import DialogHistory from './DialogWindow/DialogHistory';
 
 export const ACTIONS = {
-  NEXT: 'next'
+  START: 'start',
+  COMPLETE: 'complete'
 }
 
 function reducer(state, action) {
+  console.log("type", action.type);
+  // console.log("nodeid", action.payload.nodeId);
+  // console.log("node", state.dialog.nodes[action.payload.nodeId]);
+  let newState = JSON.parse(JSON.stringify(state));
+  let node = state.dialog.nodes[action.payload.nodeId];
+
   switch (action.type) {
-    case ACTIONS.NEXT:
-    state.scenarioPool
+    case ACTIONS.START:
+      console.log("action.payload.nodeId", action.payload.nodeId);
+      console.log({node});
+      if (node) {
+        if (node.prompt) {
+          newState.history.push({
+            id: action.payload.nodeId,
+            type: "prompt", 
+            biome: state.dialog.with.data.biome,
+            html: node.prompt
+          })
+          newState.currentNodeId = node.next_node_id;
+        };
+      }
+      return newState;
+    // case ACTIONS.COMPLETE:
+    //   switch(node.input_type) {
+    //     case null: 
+    //       delete newState.dialog.nodes[action.payload.nodeId]
+    //       newState.currentNodeId = node.next_node_id;
+    //   };
+
     default:
+      console.warn("DialogWindow action not found");
       return state;
   }
 }
 
 
 export default function DialogWindow(props) {
-  const dialog = JSON.parse(initState).content.dialogs[`${props.dialogId}`];
-  const counterpart = dialog.with;
+  const initDialog = JSON.parse(initState).content.dialogs[`${props.dialogId}`];
+  const counterpart = initDialog.with;
   
   const [state, dispatch] = useReducer(reducer, {
-    scenarioPool: dialog.scenarios,
+    dialog: initDialog,
+    currentNodeId: "",
     history: []
   });
 
-  // const [scenarioPool, setScenarioPool] = useState(dialog.scenarios);
-  // const [history, setHistory] = useState([]);
- 
-  function playNextNode() {
-    dispatch({ type: 'next' })
-  }
-
   useEffect(() => {
-    playNextNode();
+    dispatch({ type: ACTIONS.START, payload: { nodeId: "0" }})
   }, []);
-  
 
-  const messages = history.map( e => <DialogHistoryEntry entry={e} />);
-
-  function popToHistory() {
-    dispatch({type: 'popToHistory'})
-  };
-
-
-  // console.log({dialog});
+  // useEffect(() => {
+  //   console.log(`playing node ${state.currentNodeId}`);
+  //   dispatch({type: ACTIONS.START, payload: { nodeId: state.currentNodeId}})
+  //   console.log("node played");
+  // }, [state.currentNodeId])
 
   return (
     <div className={styles.l_container}>
@@ -61,10 +79,7 @@ export default function DialogWindow(props) {
             />
           </Avatar>
 
-
-          <ul className="history">
-            {messages}
-          </ul>
+          <DialogHistory history={state.history} dispatch={dispatch}/>
         </div>
       </div>
       <div className={styles.l_bottom}>
