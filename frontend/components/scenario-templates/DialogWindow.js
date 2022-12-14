@@ -7,40 +7,44 @@ import Avatar from '../wrappers/Avatar';
 import DialogHistory from './DialogWindow/DialogHistory';
 
 export const ACTIONS = {
-  START: 'start',
-  COMPLETE: 'complete'
+  INIT_DIALOG: 'init-dialog',
+  START_NODE: 'start-node',
+  COMPLETE_NODE: 'complete-node'
 }
 
 function reducer(state, action) {
-  console.log("type", action.type);
-  // console.log("nodeid", action.payload.nodeId);
-  // console.log("node", state.dialog.nodes[action.payload.nodeId]);
-  let newState = JSON.parse(JSON.stringify(state));
-  let node = state.dialog.nodes[action.payload.nodeId];
-
   switch (action.type) {
-    case ACTIONS.START:
-      console.log("action.payload.nodeId", action.payload.nodeId);
-      console.log({node});
-      if (node) {
-        if (node.prompt) {
-          newState.history.push({
-            id: action.payload.nodeId,
-            type: "prompt", 
-            biome: state.dialog.with.data.biome,
-            html: node.prompt
-          })
-          newState.currentNodeId = node.next_node_id;
-        };
-      }
-      return newState;
-    // case ACTIONS.COMPLETE:
-    //   switch(node.input_type) {
-    //     case null: 
-    //       delete newState.dialog.nodes[action.payload.nodeId]
-    //       newState.currentNodeId = node.next_node_id;
-    //   };
+    case ACTIONS.INIT_DIALOG:
+         
+    case ACTIONS.START_NODE:
+      console.log({action});
 
+      let node = state._dialog[action.payload.nodeId];
+      
+      if (node) {
+        let newState = {...state, 
+          currentNode: {...node},
+        };
+
+
+        if (newState.currentNode.prompt) {
+          newState.history = [...newState.history, {
+            id: `p-${action.payload.nodeId}`,
+            type: "prompt", 
+            biome: state._counterpart.data.biome,
+            html: node.prompt
+          }]
+
+          delete newState.currentNode.prompt;
+        }; 
+
+
+        return newState;
+      } else {
+        console.error("Dialogue node missing");
+
+        return state;
+      }
     default:
       console.warn("DialogWindow action not found");
       return state;
@@ -50,21 +54,25 @@ function reducer(state, action) {
 
 export default function DialogWindow(props) {
   const initDialog = JSON.parse(initState).content.dialogs[`${props.dialogId}`];
-  const counterpart = initDialog.with;
   
   const [state, dispatch] = useReducer(reducer, {
-    dialog: initDialog,
-    currentNodeId: "",
+    _counterpart: initDialog.with,
+    _dialog: initDialog.nodes,
+    currentNode: {},
+    currentOptions: [],
     history: []
   });
 
   useEffect(() => {
-    dispatch({ type: ACTIONS.START, payload: { nodeId: "0" }})
+    dispatch({ type: ACTIONS.START_NODE, payload: { nodeId: "0" }})
+    console.log("mounted");
+
+    return () => {console.log("unmounted")}
   }, []);
 
   // useEffect(() => {
   //   console.log(`playing node ${state.currentNodeId}`);
-  //   dispatch({type: ACTIONS.START, payload: { nodeId: state.currentNodeId}})
+  //   dispatch({type: ACTIONS.PLAY, payload: { nodeId: state.currentNodeId}})
   //   console.log("node played");
   // }, [state.currentNodeId])
 
@@ -72,14 +80,14 @@ export default function DialogWindow(props) {
     <div className={styles.l_container}>
       <div className={styles.l_top}>
         <div className={styles.counterpart}>
-          <Avatar biome={counterpart.data.biome}>
+          <Avatar biome={state._counterpart.data.biome}>
             <Image 
-              src={counterpart.data.avatarSrc}
+              src={state._counterpart.data.avatarSrc}
               layout='fill'
             />
           </Avatar>
 
-          <DialogHistory history={state.history} dispatch={dispatch}/>
+          <DialogHistory history={state.history} />
         </div>
       </div>
       <div className={styles.l_bottom}>

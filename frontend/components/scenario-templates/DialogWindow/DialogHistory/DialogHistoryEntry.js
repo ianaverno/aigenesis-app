@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 import styles from '../../../../styles/components/scenario-templates/DialogWindow/DialogHistoryEntry.module.css';
-import { ACTIONS } from '../../DialogWindow';
 
-export default function DialogHistoryEntry({entry, dispatch}) {
-  const biome = entry.biome;
-  const entryType = entry.type;
+export default function DialogHistoryEntry(props) {
+  const biome = props.entry.biome;
+  const entryType = props.entry.type;
+
   const entryClass = styles[entryType];
 
-  function handleCompleteAnimation() {
-    // console.log("entry.id", entry.id);
-    // dispatch({ type: ACTIONS.COMPLETE, payload: { nodeId: entry.id }})
+  function emitCommandTyped() {
+    console.log("Command typed");
   }
 
   return (
@@ -20,8 +19,9 @@ export default function DialogHistoryEntry({entry, dispatch}) {
           cursor: '█'
         }}
         onInit={(typewriter) => {
-          typewriter.typeString(entry.html)
-          // .callFunction(handleCompleteAnimation)
+          typewriter.cursor = '█';
+          typewriter.typeString(props.entry.html)
+          .callFunction(emitCommandTyped)
           .start();
         }}
       />

@@ -16,7 +16,7 @@ export default function AigenEsis() {
         </Head>
 
         <main className={styles.main}>
-            <Mainframe />
+          <Mainframe />
         </main>
       </div>
     </UserProvider>

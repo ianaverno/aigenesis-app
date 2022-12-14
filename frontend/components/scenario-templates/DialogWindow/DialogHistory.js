@@ -1,11 +1,8 @@
 import DialogHistoryEntry from './DialogHistory/DialogHistoryEntry';
 
 export default function DialogHistory(props) {
-  console.log(props.history);
-
-  const entries = props.history.map((e) => {
-    <DialogHistoryEntry entry={e} dispatch={props.dispatch} />
-  });
+  console.log({props});
+  const entries = props.history.map(e => <DialogHistoryEntry entry={e} key={e.id} />);
 
   return(
     <ul className="history">
