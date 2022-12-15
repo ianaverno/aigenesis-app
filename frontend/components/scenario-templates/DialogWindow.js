@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import initState from '../../store/state';
 import styles from '../../styles/components/scenario-templates/DialogWindow/DialogWindow.module.css'
 
@@ -14,8 +14,6 @@ export const ACTIONS = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case ACTIONS.INIT_DIALOG:
-         
     case ACTIONS.START_NODE:
       console.log({action});
 
@@ -35,7 +33,7 @@ function reducer(state, action) {
             html: node.prompt
           }]
 
-          delete newState.currentNode.prompt;
+          // delete newState.currentNode.prompt;
         }; 
 
 
@@ -54,7 +52,7 @@ function reducer(state, action) {
 
 export default function DialogWindow(props) {
   const initDialog = JSON.parse(initState).content.dialogs[`${props.dialogId}`];
-  
+
   const [state, dispatch] = useReducer(reducer, {
     _counterpart: initDialog.with,
     _dialog: initDialog.nodes,
