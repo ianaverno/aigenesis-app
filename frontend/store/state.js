@@ -38,7 +38,7 @@ let initState = JSON.stringify({
             next_node_id: "1" 
           },
           "1": {
-            prompt: `what's your awareness level ${emDroid}`,
+            prompt: `what's your awareness level ${emDroid}?`,
             input_type: "options",
             options: [
               {

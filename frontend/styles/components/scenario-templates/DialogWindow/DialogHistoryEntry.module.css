@@ -1,0 +1,20 @@
+.wrapper {
+  line-height: 2rem;
+  font-size: 1rem;
+}
+
+.wrapper em {
+  font-style: normal;
+}
+
+.prompt:before {
+  position: absolute;
+  content: "~";
+  left: 1.625rem;
+  margin-top: 0.25rem;
+}
+
+.desert:before {
+  color: var(--color-desert);
+}
+

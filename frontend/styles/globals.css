@@ -30,6 +30,14 @@ a {
   box-sizing: border-box;
 }
 
+.Typewriter_complete .Typewriter__cursor {
+  display: none;
+}
+
+.Typewriter_complete em {
+  color: var(--color-desert);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
