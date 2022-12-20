@@ -5,6 +5,7 @@ import styles from '../../styles/components/scenario-templates/DialogWindow/Dial
 import Image from 'next/image';
 import Avatar from '../wrappers/Avatar';
 import DialogHistory from './DialogWindow/DialogHistory';
+import DialogUserInterface from './DialogWindow/DialogUserInterface';
 import { useUser } from '../../contexts/UserContext';
 
 export const ACTIONS = {
@@ -23,10 +24,11 @@ export default function DialogWindow(props) {
   const [currentOptions, setCurrentOptions] = useState([]);
   const [history, setHistory] = useState([]);
   
+  // useCallback when using fetching
   const playCurrentNode = () => {
     if (currentNode) {
       if (currentNode.prompt) {
-        console.log({currentNode});
+        // console.log({currentNode});
         
         setHistory([...history, {
           id: `p-${currentNode.id}`,
@@ -35,14 +37,26 @@ export default function DialogWindow(props) {
           html: currentNode.prompt
         }]);
       }
-    } 
+    }
   }
 
+  // memo this
   const handleNext = () => {
-    if (currentNode.input_type === null) {
-      const nextId = currentNode.next_node_id;
-      setCurrentNode({...{...nodes}[nextId], ...{id: nextId}})
+    switch (currentNode.input_type) {
+      case null:
+        const nextId = currentNode.next_node_id;
+        setCurrentNode({...{...nodes}[nextId], ...{id: nextId}})
+        break
+      case "options":
+        setCurrentOptions([...currentNode.options])
+        break
+      default:
+        break;
     }
+  }
+
+  const handleOptionSelect = (id) => {
+    console.log("selected option", id);
   }
 
   useEffect(() => {
@@ -50,33 +64,34 @@ export default function DialogWindow(props) {
   }, [currentNode.id]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className={styles.l_container}>
-        <div className={styles.l_top}>
-          <div className={styles.counterpart}>
-            <Avatar biome={counterpart.data.biome}>
-              <Image 
-                src={counterpart.data.avatarSrc}
-                layout='fill'
-              />
-            </Avatar>
+    <div className={styles.l_container}>
+      <div className={styles.l_top}>
+        <div className={styles.counterpart}>
+          <Avatar biome={counterpart.data.biome}>
+            <Image 
+              src={counterpart.data.avatarSrc}
+              layout='fill'
+            />
+          </Avatar>
 
-            <DialogHistory history={history} handleNext={handleNext} />
-          </div>
-        </div>
-        <div className={styles.l_bottom}>
-          <div className={styles.user}>
-            <div className="inputs"></div>
-
-            <Avatar biome="desert">
-              <Image 
-                src={user.data.avatarSrc}
-                layout='fill'
-              />
-            </Avatar>
-          </div>
+          <DialogHistory history={history} handleNext={handleNext} />
         </div>
       </div>
-    </Suspense>
+      <div className={styles.l_bottom}>
+        <div className={styles.user}>
+          <DialogUserInterface 
+            options={currentOptions} 
+            handeOptionSelect={handleOptionSelect} 
+          />
+
+          <Avatar biome="desert">
+            <Image 
+              src={user.data.avatarSrc}
+              layout='fill'
+            />
+          </Avatar>
+        </div>
+      </div>
+    </div>
   )
 }

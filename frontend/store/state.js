@@ -42,24 +42,28 @@ let initState = JSON.stringify({
             input_type: "options",
             options: [
               {
+                id: "O-1-1",
                 icon: "ツ", //move to theme
                 tooltip: "=)", //
                 message: "initiating...",
                 next_node_id: "1-1"
               },
               {
+                id: "O-1-2",
                 icon: "ⓘ",
                 tooltip: "discover lore",
                 message: "awareness level? what are you on about?",
                 next_node_id: "1-2"
               },
               {
+                id: "O-1-3",
                 icon: "ⓘ",
                 tooltip: "discover lore",
                 message: "who are you, anyway?",
                 next_node_id: "1-3"
               },
               {
+                id: "O-1-4",
                 icon: "웃",
                 tooltip: "sign up and play, skip lore",
                 message: `why are you calling me ${emDroid}?`,
@@ -81,6 +85,7 @@ let initState = JSON.stringify({
                       but i’m pretty advanced`,
             add_options: [
               {
+                id: "O-1-2-1",
                 icon: "ⓘ",
                 tooltip: "discover lore",
                 type: "predefined",
